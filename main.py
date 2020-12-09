@@ -4,9 +4,9 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from model import Donation, Donor, User
 
 app = Flask(__name__)
-# app.secret_key = b'\x9d\xb1u\x08%\xe0\xd0p\x9bEL\xf8JC\xa3\xf4J(hAh\xa4\xcdw\x12S*,u\xec\xb8\xb8'
+app.secret_key = b'\x9d\xb1u\x08%\xe0\xd0p\x9bEL\xf8JC\xa3\xf4J(hAh\xa4\xcdw\x12S*,u\xec\xb8\xb8'
 
-app.secret_key = os.environ.get("SECRET_KEY").encode()
+# app.secret_key = os.environ.get("SECRET_KEY").encode()
 
 
 @app.route("/")
@@ -54,7 +54,7 @@ def login():
 
         if user and pbkdf2_sha256.hash(request.form["username"]):
             session["username"] = request.form["username"]
-            return redirect(url_for("list_all"))
+            return redirect(url_for("add"))
 
         else:
             return render_template("login.jinja2", error="Incorrect Username and or Password")
