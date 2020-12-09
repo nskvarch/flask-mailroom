@@ -1,14 +1,17 @@
 import random
-
-from model import db, Donor, Donation 
+from passlib.hash import pbkdf2_sha256
+from model import db, Donor, Donation, User
 
 db.connect()
 
 # This line will allow you "upgrade" an existing database by
 # dropping all existing tables from it.
-db.drop_tables([Donor, Donation])
+db.drop_tables([Donor, Donation, User])
 
-db.create_tables([Donor, Donation])
+db.create_tables([Donor, Donation, User])
+
+User(username="admin", password=pbkdf2_sha256.hash("password")).save()
+User(username="bob", password=pbkdf2_sha256.hash("bobbob")).save()
 
 alice = Donor(name="Alice")
 alice.save()
